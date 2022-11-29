@@ -1,0 +1,4 @@
+name: app5
+replicas: 3
+containerport: 80
+image: nginx

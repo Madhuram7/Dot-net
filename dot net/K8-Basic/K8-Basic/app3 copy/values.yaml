@@ -1,0 +1,11 @@
+webserver:
+  name: webserver
+  replicas: 2
+  service: svc-webserver
+  port: 80
+apiserver:
+  name: apiserver
+  replicas: 2
+  service: svc-apiserver
+  port: 80
+  

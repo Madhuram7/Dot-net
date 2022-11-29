@@ -1,0 +1,5 @@
+name: app4
+replicas: 3
+containerport: 80
+image: httpd
+image_version: latest

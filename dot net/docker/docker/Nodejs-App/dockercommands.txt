@@ -1,0 +1,16 @@
+#download folder nodejs-app
+
+# Build Docker Image
+docker build -t nodejsapp .
+
+# check build Image
+docker images
+
+#run built images
+docker run -p 8002:80 -d nodejsapp
+
+#test application 
+http://localhost:8002
+
+
+

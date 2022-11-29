@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "dataFactoryLocation": {
+      "value": "eastus2"
+    },
+    "datafactoryName": {
+      "value": "eus2-mosaic-prod-adf"
+    },
+    "datafactoryLocation": {
+      "value": "eastus2"
+    },
+    "firstVnetName": {
+      "value": "eus2-mosaic-prod-vnet01"
+    },
+    "firstVnetPrefix": {
+      "value": "10.3.0.0/16"
+    },
+    "firstVnetSubnetName": {
+      "value": "eus2-mosaic-prod-snet01"
+    },
+    "firstVnetSubnetPrefix": {
+      "value": "10.3.0.0/24"
+    },
+    "newOrExisting": {
+      "value": "new"
+    }
+  }
+}

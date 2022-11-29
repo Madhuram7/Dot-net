@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "datafactoryName": {
+      "value": "mosaic-tv-adf"
+    },
+    "datafactoryLocation": {
+      "value": "eastus2"
+    },
+    "firstVnetName": {
+      "value": "mosaic-tv-vNet"
+    },
+    "firstVnetPrefix": {
+      "value": "10.49.255.0/24"
+    },
+    "firstVnetSubnetName": {
+      "value": "mosiac-tv-adls-integration-subnet"
+    },
+    "firstVnetSubnetPrefix": {
+      "value": "10.49.255.0/26"
+    },
+    "secondVnetSubnetName": {
+      "value": "mosiac-tv-sql-integration-subnet"
+    },
+    "secondVnetSubnetPrefix": {
+      "value": "10.49.255.64/26"
+    },
+    "thirdVnetSubnetName": {
+      "value": "mosiac-tv-vm-integration-subnet"
+    },
+    "thirdVnetSubnetPrefix": {
+      "value": "10.49.255.128/26"
+    },
+    "newOrExisting": {
+      "value": "new"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Values.appserver.name }}
+  labels:
+    app: {{ .Values.appserver.name }}
+spec:
+  replicas: {{ .Values.appserver.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appserver.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appserver.name }}
+    spec:
+      containers:
+      - image: {{ .Values.appserver.image }}
+        name: web
+        ports:
+        - containerPort: {{ .Values.appserver.port }}
+          name: http
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appserver.service }}
+spec:
+  selector:
+    app: {{ .Values.appserver.name }}
+  ports:
+  - protocol: "TCP"
+    port: {{ .Values.appserver.port }}
+    targetPort: {{ .Values.appserver.port }}
+  type: LoadBalancer

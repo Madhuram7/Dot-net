@@ -1,0 +1,35 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Values.apiserver.name }}
+  labels:
+    app: {{ .Values.apiserver.name }}
+spec:
+  replicas: {{ .Values.apiserver.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.apiserver.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.apiserver.name }}
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: {{ .Values.apiserver.port }}
+          name: http
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.apiserver.service }}
+spec:
+  selector:
+    app: {{ .Values.apiserver.name }}
+  ports:
+  - protocol: "TCP"
+    port: {{ .Values.apiserver.port }}
+    targetPort: {{ .Values.apiserver.port }}

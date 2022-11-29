@@ -1,0 +1,382 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourceGroupName": {
+      "type": "string"
+    },
+    "sqlAdministratorLogin": {
+      "type": "string",
+      "metadata": {
+        "description": "The administrator username of the SQL logical server"
+      }
+    },
+    "sqlAdministratorLoginPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The administrator password of the SQL logical server."
+      }
+    },
+    "sqlServerName": {
+      "type": "string"
+    },
+    "databaseName": {
+      "type": "string"
+    },
+    "sqlDBSKU": {
+      "type": "string"
+    },
+    "edition": {
+      "type": "string"
+    },
+    "serviceLevelObjectiveDbName": {
+      "type": "string"
+    },
+    "dataWarehouseName": {
+      "type": "string"
+    },
+    "sqlDWSKU": {
+      "type": "string"
+    },
+    "serviceLevelObjectiveDwName": {
+      "type": "string"
+    },
+    "privateEndpointName": {
+      "type": "string"
+    },
+    "vnetName": {
+      "type": "string"
+    },
+    "vnetAddressPrefix": {
+      "type": "string"
+    },
+    "subnet1Prefix": {
+      "type": "string"
+    },
+    "subnet1Name": {
+      "type": "string"
+    },
+    "vmAdminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "vmAdminPassword": {
+      "type": "secureString",
+      "metadata": {
+        "description": "Password for the Virtual Machine. The password must be at least 12 characters long and have lower case, upper characters, digit and a special character (Regex match)"
+      }
+    },
+    "VmSize": {
+      "type": "string",
+      "defaultValue": "Standard_D2_v2",
+      "metadata": {
+        "description": "The size of the VM"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    }
+    // "newOrExisting": {
+    //   "type": "string",
+    //   "allowedValues": [
+    //     "new",
+    //     "existing"
+    //   ]
+    // }
+  },
+  "variables": {
+    "vnetName": "[parameters('vnetName')]",
+    "vnetAddressPrefix": "[parameters('vnetAddressPrefix')]",
+    "subnet1Prefix": "[parameters('subnet1Prefix')]",
+    "subnet1Name": "[parameters('subnet1Name')]",
+    "sqlServerName": "[parameters('sqlServerName')]",
+    "databaseName": "[parameters('databaseName')]",
+    "privateEndpointName": "[parameters('privateEndpointName')]",
+    "privateDnsZoneName": "[concat('privatelink', environment().suffixes.sqlServerHostname)]",
+    "pvtendpointdnsgroupname": "[concat(variables('privateEndpointName'),'/sqlsvrdnsgroupname')]",
+    // "vmName": "eus2-mosaic-dev-shirvm",
+    // "publicIpAddressName": "[concat(variables('vmName'), 'PublicIP' )]",
+    "networkInterfaceName": "[concat(variables('sqlServerName'),'-netint')]",
+    "osDiskType": "Standard_LRS",
+    "vnetid": "[resourceId(subscription().subscriptionId,parameters('resourceGroupName'), 'Microsoft.Network/virtualNetworks', variables('vnetName'))]",
+    "subnetid": "[resourceId(subscription().subscriptionId,parameters('resourceGroupName'),'Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnet1Name'))]"
+  },
+  "resources": [
+    {
+      // "condition": "[equals(parameters('newOrExisting'),'new')]",
+      "type": "Microsoft.Sql/servers",
+      "apiVersion": "2020-02-02-preview",
+      "name": "[variables('sqlServerName')]",
+      "location": "[parameters('location')]",
+      "kind": "v12.0",
+      "tags": {
+        "displayName": "[variables('sqlServerName')]"
+      },
+      "properties": {
+        "administratorLogin": "[parameters('sqlAdministratorLogin')]",
+        "administratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
+        "version": "12.0",
+        "publicNetworkAccess": "Disabled"
+      },
+      "resources": [
+      ]
+    },
+    {
+      // "condition": "[equals(parameters('newOrExisting'),'new')]",
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2020-02-02-preview",
+      "name": "[concat(variables('sqlServerName'), '/' ,variables('databaseName'))]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "HS_Gen5",
+        "tier": "[parameters('sqlDBSKU')]",
+        "family": "Gen5",
+        "capacity": 2
+      },
+      "kind": "v12.0,user,vcore,hyperscale",
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+      ],
+      "tags": {
+        "displayName": "[variables('databaseName')]"
+      },
+      "properties": {
+        "collation": "SQL_Latin1_General_CP1_CI_AS",
+        "maxSizeBytes": -1,
+        "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+        "zoneRedundant": false,
+        "licenseType": "LicenseIncluded",
+        "readScale": "Enabled",
+        "highAvailabilityReplicaCount": 1,
+        "storageAccountType": "GRS"
+      }
+    },
+    {
+      // "condition": "[equals(parameters('newOrExisting'),'new')]",
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2020-02-02-preview",
+      "name": "[concat(variables('sqlServerName'), '/' ,parameters('dataWarehouseName'))]",
+      "location": "[parameters('location')]",
+      "sku": {
+                "name": "DataWarehouse",
+                "tier": "DataWarehouse",
+                "capacity": 900
+            },
+      "kind": "v12.0,user,datawarehouse,gen2",
+      "dependsOn": [
+        "[parameters('sqlServerName')]"
+      ],
+      "properties": {
+        "edition": "DataWarehouse",
+        "status": "Online",
+        "requestedServiceObjectiveName": "[parameters('serviceLevelObjectiveDwName')]",
+        "collation": "SQL_Latin1_General_CP1_CI_AS",
+        "readScale": "Disabled",
+        "zoneRedundant": false,
+        "isUpgradeRequested": false
+      }
+    }
+    // {
+    //   "type": "Microsoft.Network/virtualNetworks",
+    //   "apiVersion": "2020-06-01",
+    //   "name": "[variables('vnetName')]",
+    //   "location": "[parameters('location')]",
+    //   "properties": {
+    //     "addressSpace": {
+    //       "addressPrefixes": [
+    //         "[variables('vnetAddressPrefix')]"
+    //       ]
+    //     }
+    //   }
+      // "resources": [
+      //   {
+      //     "type": "subnets",
+      //     "apiVersion": "2020-06-01",
+      //     "name": "[variables('subnet1Name')]",
+      //     "location": "[parameters('location')]",
+      //     "dependsOn": [
+      //       "[variables('vnetName')]"
+      //     ],
+      //     "properties": {
+      //       "addressPrefix": "[variables('subnet1Prefix')]",
+      //       "privateEndpointNetworkPolicies": "Disabled"
+      //     }
+      //   }
+      // ]
+    //},
+    // {
+    //   "type": "Microsoft.Network/privateEndpoints",
+    //   "apiVersion": "2020-06-01",
+    //   "name": "[variables('privateEndpointName')]",
+    //   "location": "[parameters('location')]",
+    //   "dependsOn": [
+    //     "[variables('vnetid')]",
+    //     "[variables('sqlServerName')]"
+    //   ],
+    //   "properties": {
+    //     "subnet": {
+    //       "id": "[variables('subnetid')]"
+    //     },
+    //     "privateLinkServiceConnections": [
+    //       {
+    //         "name": "[variables('privateEndpointName')]",
+    //         "properties": {
+    //           "privateLinkServiceId": "[resourceId('Microsoft.Sql/servers',variables('sqlServerName'))]",
+    //           "groupIds": [
+    //             "sqlServer"
+    //           ]
+    //         }
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   "type": "Microsoft.Network/privateDnsZones",
+    //   "apiVersion": "2020-01-01",
+    //   "name": "[variables('privateDnsZoneName')]",
+    //   "location": "global",
+    //   "dependsOn": [
+    //     "[variables('vnetid')]"
+    //   ],
+    //   "properties": ""
+    // },
+    // {
+    //   "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+    //   "apiVersion": "2020-01-01",
+    //   "name": "[concat(variables('privateDnsZoneName'), '/', variables('privateDnsZoneName'), '-link')]",
+    //   "location": "global",
+    //   "dependsOn": [
+    //     "[resourceId('Microsoft.Network/privateDnsZones', variables('privateDnsZoneName'))]",
+    //     "[variables('vnetid')]"
+    //   ],
+    //   "properties": {
+    //     "registrationEnabled": false,
+    //     "virtualNetwork": {
+    //       "id": "[variables('vnetid')]"
+    //     }
+    //   }
+    // },
+    // {
+    //   "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+    //   "apiVersion": "2020-06-01",
+    //   "name": "[variables('pvtendpointdnsgroupname')]",
+    //   "location": "[parameters('location')]",
+    //   "dependsOn": [
+    //     "[resourceId('Microsoft.Network/privateDnsZones', variables('privateDnsZoneName'))]",
+    //     "[variables('privateEndpointName')]"
+    //   ],
+    //   "properties": {
+    //     "privateDnsZoneConfigs": [
+    //       {
+    //         "name": "config1",
+    //         "properties": {
+    //           "privateDnsZoneId": "[resourceId('Microsoft.Network/privateDnsZones', variables('privateDnsZoneName'))]"
+    //         }
+    //       }
+    //     ]
+    //   }
+    // }
+    // {
+    //   "type": "Microsoft.Network/publicIPAddresses",
+    //   "apiVersion": "2020-06-01",
+    //   "name": "[variables('publicIpAddressName')]",
+    //   "location": "[parameters('location')]",
+    //   "tags": {
+    //     "displayName": "[variables('publicIpAddressName')]"
+    //   },
+    //   "properties": {
+    //     "publicIPAllocationMethod": "Dynamic",
+    //     "dnsSettings": {
+    //       "domainNameLabel": "[tolower(variables('vmName'))]"
+    //     }
+    //   }
+    // },
+    // {
+    //   "type": "Microsoft.Network/networkInterfaces",
+    //   "apiVersion": "2020-06-01",
+    //   "name": "[variables('networkInterfaceName')]",
+    //   "location": "[parameters('location')]",
+    //   "dependsOn": [
+    //     "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIpAddressName'))]",
+    //     "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+    //   ],
+    //   "tags": {
+    //     "displayName": "[variables('networkInterfaceName')]"
+    //   },
+    //   "properties": {
+    //     "ipConfigurations": [
+    //       {
+    //         "name": "ipConfig1",
+    //         "properties": {
+    //           "privateIPAllocationMethod": "Dynamic",
+    //           "publicIPAddress": {
+    //             "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIpAddressName'))]"
+    //           },
+    //           "subnet": {
+    //             "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnet1Name'))]"
+    //           }
+    //         }
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   "type": "Microsoft.Compute/virtualMachines",
+    //   "apiVersion": "2020-06-01",
+    //   "name": "[variables('vmName')]",
+    //   "location": "[parameters('location')]",
+    //   "dependsOn": [
+    //     "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
+    //   ],
+    //   "tags": {
+    //     "displayName": "[variables('vmName')]"
+    //   },
+    //   "properties": {
+    //     "hardwareProfile": {
+    //       "vmSize": "[parameters('VmSize')]"
+    //     },
+    //     "osProfile": {
+    //       "computerName": "[variables('vmName')]",
+    //       "adminUsername": "[parameters('vmAdminUsername')]",
+    //       "adminPassword": "[parameters('vmAdminPassword')]"
+    //     },
+    //     "storageProfile": {
+    //       "imageReference": {
+    //         "publisher": "MicrosoftWindowsServer",
+    //         "offer": "WindowsServer",
+    //         "sku": "2019-Datacenter",
+    //         "version": "latest"
+    //       },
+    //       "osDisk": {
+    //         "name": "[concat(variables('vmName'),'OsDisk')]",
+    //         "caching": "ReadWrite",
+    //         "createOption": "FromImage",
+    //         "managedDisk": {
+    //           "storageAccountType": "[variables('osDiskType')]"
+    //         },
+    //         "diskSizeGB": 128
+    //       }
+    //     },
+    //     "networkProfile": {
+    //       "networkInterfaces": [
+    //         {
+    //           "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
+    //         }
+    //       ]
+    //     }
+    //   }
+    // }
+  ]
+  // "outputs": {
+  //       "privateEndpointNetworkInterface": {
+  //         "type": "string",
+  //         "value": "[reference(concat('Microsoft.Network/privateEndpoints/', variables('privateEndpointName'))).networkInterfaces[0].id]"
+  //       }
+  //   }
+}

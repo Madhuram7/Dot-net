@@ -1,0 +1,38 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Values.front_podname }}
+  labels:
+    env: {{ .Values.front_env }}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      env: {{ .Values.front_env }}
+  template:
+    metadata:
+      labels:
+        env: {{ .Values.front_env }}
+    spec:
+      containers:
+      - image: {{ .Values.front_image }}
+        name: {{ .Values.front_podname }}
+        ports:
+        - containerPort: 80
+          name: http
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.front_svc }}
+spec:
+  selector:
+    env: {{ .Values.front_env }}
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
+
+---

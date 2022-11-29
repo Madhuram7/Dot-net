@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourceGroupName": {
+      "value": "rg-eus2-mosaic-np-tv"
+    },
+    "sqlAdministratorLogin": {
+      "value": "azuresqladmin"
+    },
+    "sqlAdministratorLoginPassword": {
+      "value": "Sql@dm1n"
+    },
+    "sqlServerName": {
+      "value": "mosaic-np-tv-sql-server"
+    },
+    "databaseName": {
+      "value": "mosaic_np_db"
+    },
+    "sqlDBSKU": {
+      "value": "Hyperscale"
+    },
+     "edition": {
+      "value": "Hyperscale"
+    },
+    "serviceLevelObjectiveDbName": {
+      "value": "HS_Gen5_4"
+    },
+    "dataWarehouseName": {
+      "value": "mosaic-np-tv-dwh"
+    },
+    "sqlDWSKU": {
+      "value": ""
+    },
+    "serviceLevelObjectiveDwName": {
+      "value": "DW400c"
+    },
+    "privateEndpointName": {
+      "value": "mosaic-np-tv-sql-private-endpoint"
+    },
+    "vnetName": {
+      "value": "mosaic-tv-vNet"
+    },
+    "vnetAddressPrefix": {
+      "value": "10.49.255.0/24"
+    },
+    "subnet1Prefix": {
+      "value": "10.49.255.64/26"
+    },
+    "subnet1Name": {
+      "value": "mosiac-tv-sql-integration-subnet"
+    },
+    "vmAdminUsername": {
+      "value": "azurevmadmin"
+    },
+    "vmAdminPassword": {
+      "value": "Vm@admin1#"
+    },
+    "VmSize": {
+      "value": "Standard_D2s_v3"
+    }
+    //"newOrExisting": {
+    //  "value": "new"
+   // }
+  }
+}

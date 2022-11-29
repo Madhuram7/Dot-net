@@ -1,0 +1,24 @@
+trigger:
+  branches:
+    include:
+    - refs/heads/adf_publish
+  paths:
+    include:
+    - /eus2-mosaic-dev-adf/*
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/adf_publish
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    vmImage: vs2017-win2016
+  steps:
+  - checkout: self
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: drop'
+    inputs:
+      PathtoPublish: eus2-mosaic-dev-adf
+...

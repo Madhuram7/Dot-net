@@ -1,0 +1,4 @@
+name: default
+replicas: default
+containerport: default
+image: default

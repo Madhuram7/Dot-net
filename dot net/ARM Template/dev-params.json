@@ -1,0 +1,25 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vmName": {
+        "value": "my-new-vm"
+      },
+      "adminUsername": {
+        "value": "vritadmin"
+      },
+      "adminPassword": {
+        "value": "VritAdmin100000!"
+      },
+      "OSVersion": {
+        "value": "2019-Datacenter"
+      },
+      "VmSize": {
+        "value": "Standard_B2ms"
+      },
+      "location": {
+        "value": "westus"
+      }
+      
+     }
+  }

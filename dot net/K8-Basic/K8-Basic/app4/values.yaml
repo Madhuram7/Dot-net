@@ -1,0 +1,6 @@
+webserver:
+  name: app4-webserver
+  replicas: 2
+  service: svc-app4-webserver
+  port: 80
+  image: mcr.microsoft.com/dotnet/core/samples:aspnetapp

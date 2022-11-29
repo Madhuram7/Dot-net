@@ -1,0 +1,14 @@
+webserver:
+  name: webserver22
+  replicas: 2
+  service: svc-webserver22
+  port: 80
+  image: mcr.microsoft.com/dotnet/core/samples:aspnetapp
+
+
+appserver:
+  name: appserver22
+  replicas: 2
+  service: svc-appserver22
+  port: 80
+  image: mcr.microsoft.com/dotnet/core/samples:aspnetapp

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sqlAdministratorLogin": {
+      "value": "MosaicOPS"
+    },
+    "sqlAdministratorLoginPassword": {
+      "value": "Mosaic2021@#237"
+    },
+    "sqlServerName": {
+      "value": "eus2-mosaic-dev-sqlsvr"
+    },
+    "databaseName": {
+      "value": "eus2-mosaic-dev-sqldb"
+    },
+    "dataWarehouseName": {
+      "value": "eus2-mosaic-dev-01-sqldw"
+    },
+    "serviceLevelObjective": {
+      "value": "DW100c"
+    },
+    "privateEndpointName": {
+      "value": "eus2-mosaic-dev-sqlsvr-pvtendpnt"
+    },
+    "vmAdminUsername": {
+      "value": "MosaicOPS"
+    },
+    "vmAdminPassword": {
+      "value": "Mosaic2021@1234"
+    },
+    "VmSize": {
+      "value": "Standard_B1s"
+    },
+    "newOrExisting": {
+      "value": "new"
+    }
+  }
+}

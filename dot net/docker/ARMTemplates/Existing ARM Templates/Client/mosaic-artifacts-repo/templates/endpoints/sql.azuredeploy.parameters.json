@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourceGroupName": {
+      "value": "temp-mosaic-group"
+    },
+    "sqlAdministratorLogin": {
+      "value": "MosaicOPS"
+    },
+    "sqlAdministratorLoginPassword": {
+      "value": "Mosaic2021@#237"
+    },
+    "sqlServerName": {
+      "value": "eus2-mosaic-temp20-sqlsvr"
+    },
+    "databaseName": {
+      "value": "eusmosaictemp20sqldb"
+    },
+    "sqlDBSKU": {
+      "value": "Basic"
+    },
+    "serviceLevelObjectiveDbName": {
+      "value": "Basic"
+    },
+    "dataWarehouseName": {
+      "value": "eus2-mosaic-temp20-sqldw"
+    },
+    "sqlDWSKU": {
+      "value": ""
+    },
+    "serviceLevelObjectiveDwName": {
+      "value": "DW100c"
+    },
+    "privateEndpointName": {
+      "value": "eus2-mosaic-temp20-sqlsvr-pvtendpnt"
+    },
+    "vnetName": {
+      "value": "eus2-mosaic-temp20-shirvnet"
+    },
+    "vnetAddressPrefix": {
+      "value": "10.6.0.0/16"
+    },
+    "subnet1Prefix": {
+      "value": "10.6.0.0/24"
+    },
+    "subnet1Name": {
+      "value": "eus2-mosaic-temp20-sqlsvr-snet"
+    },
+    "vmAdminUsername": {
+      "value": "MosaicOPS"
+    },
+    "vmAdminPassword": {
+      "value": "Mosaic2021@1234"
+    },
+    "VmSize": {
+      "value": "Standard_B2s"
+    },
+    "newOrExisting": {
+      "value": "new"
+    }
+  }
+}

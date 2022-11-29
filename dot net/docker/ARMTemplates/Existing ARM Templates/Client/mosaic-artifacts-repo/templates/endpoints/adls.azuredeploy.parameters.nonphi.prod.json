@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storageAccountName": {
+      "value":"eus220adls"
+    },
+    "storageSku": {
+      "value":"Standard_LRS"
+    },
+    "location": {
+      "value":"eastus2"
+    },
+    "vnetName": {
+      "value": "eus2-mosaic-temp21-shirvnet"
+    },
+    "vnetAddressPrefix": {
+      "value": "10.7.0.0/16"
+    },
+    "subnet1Prefix": {
+      "value": "10.7.1.0/24"
+    },
+    "subnet1Name": {
+      "value": "eus2-mosaic-temp21-adls-snet01"
+    },
+    "privateEndpointName": {
+      "value": "eus2-mosaic-temp21-adls-pvtendpnt"
+    },
+    "newOrExisting": {
+      "value": "new"
+    }
+  }
+}

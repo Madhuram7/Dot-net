@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "existingDataFactoryName": {
+      "value":"mosaic-tv-adf"
+    },
+    "existingDataFactoryResourceGroup": {
+      "value":"rg-eus2-mosaic-tv"
+    },
+    "existingDataFactoryVersion": {
+      "value":"V2"
+    },
+    "IntegrationRuntimeName": {
+      "value":"mosaic-tv-integration-runtime"
+    },
+    // "newOrExisting": {
+    //   "value": "new"
+    // },
+    "NodeCount":{
+      "value": 1
+    },
+    "vmName": {
+      "value": "mosaicvm"
+    },
+    "vmSize": {
+      "value": "Standard_D2s_v3"
+    },
+    "adminUserName": {
+      "value": "azurevmadmin"
+    },
+    "adminPassword": {
+      "value": "Vm@admin1#"
+    },
+    "existingVirtualNetworkName":{
+      "value": "mosaic-tv-vNet"
+    },
+    "existingVnetResourceGroupName":{
+      "value": "rg-eus2-mosaic-tv"
+    },
+    "existingSubnetInYourVnet": {
+      "value": "mosiac-tv-vm-integration-subnet"
+    },
+    "existingVnetLocation": {
+      "value": "eastus2"
+    },
+    "_artifactsLocation": {
+      "value": "https://mosaicdeployments.blob.core.windows.net/templates/"
+    },
+    "_artifactsLocationSasToken": {
+      "value": "sv=2020-02-10&ss=bfqt&srt=sco&sp=rwdlacupx&se=2021-04-10T18:46:27Z&st=2021-03-12T11:46:27Z&spr=https&sig=%2Fk9q3dbwyMa%2B6q7fi3RmWR%2BIeyk8EYxoL6LOrlj63U0%3D"
+    }
+  }
+}

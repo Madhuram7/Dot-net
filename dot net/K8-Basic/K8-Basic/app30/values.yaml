@@ -1,0 +1,14 @@
+webserver:
+  name: webserver30
+  replicas: 2
+  service: svc-webserver30
+  port: 80
+  image: mcr.microsoft.com/dotnet/core/samples:aspnetapp
+
+
+appserver:
+  name: appserver30
+  replicas: 2
+  service: svc-appserver30
+  port: 80
+  image: mcr.microsoft.com/dotnet/core/samples:aspnetapp

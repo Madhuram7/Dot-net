@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "existingDataFactoryName": {
+      "value":"eus2-mosaic-temp20-adf"
+    },
+    "existingDataFactoryResourceGroup": {
+      "value":"temp-mosaic-group"
+    },
+    "existingDataFactoryVersion": {
+      "value":"V2"
+    },
+    "IntegrationRuntimeName": {
+      "value":"eus2-mosaic-temp20-selfhosted"
+    },
+    "NodeCount":{
+      "value": 1
+    },
+    "vmName": {
+      "value": "mosaictemp20vm"
+    },
+    "vmSize": {
+      "value": "Standard_B2s"
+    },
+    "adminUserName": {
+      "value": "MosaicOPS"
+    },
+    "adminPassword": {
+      "value": "Mosaic2021@237"
+    },
+    "existingVirtualNetworkName":{
+      "value": "eus2-mosaic-temp20-shirvnet"
+    },
+    "existingVnetResourceGroupName":{
+      "value": "temp-mosaic-group"
+    },
+    "existingSubnetInYourVnet": {
+      "value": "eus2-mosaic-temp20-snet01"
+    },
+    "existingVnetLocation": {
+      "value": "eastus2"
+    },
+    "_artifactsLocation": {
+      "value": "https://mosaicdeployments.blob.core.windows.net/templates/"
+    },
+    "_artifactsLocationSasToken": {
+      "value": "sv=2020-02-10&ss=bfqt&srt=sco&sp=rwdlacupx&se=2021-03-12T19:33:34Z&st=2021-02-26T11:33:34Z&spr=https&sig=uqzqISG0xv5%2FdDIjAnrz2g%2B%2F46uueyGRYSrcyqjsH1k%3D"
+    }
+    //"newOrExisting": {
+    //  "value": "new"
+    //}
+  }
+}

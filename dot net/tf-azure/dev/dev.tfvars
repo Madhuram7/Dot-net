@@ -1,0 +1,10 @@
+rg_name = "rg-dev"
+rg_location = "West Europe"
+acr_name = "vritdevopsacrdev"
+acr_sku = "Basic"
+environment = "dev"
+vnet_name = "aksvnet-dev"
+subnet_name = "aks_subnet"
+aks_name = "vritdevopsaksdev"
+aks_vm_size    = "Standard_D2_v2"
+aks_node_count = 1

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "datafactoryName": {
+      "value": "eus2-mosaic-temp20-adf"
+    },
+    "datafactoryLocation": {
+      "value": "eastus2"
+    },
+    "firstVnetName": {
+      "value": "eus2-mosaic-temp20-shirvnet"
+    },
+    "firstVnetPrefix": {
+      "value": "10.6.0.0/16"
+    },
+    "firstVnetSubnetName": {
+      "value": "eus2-mosaic-temp20-snet01"
+    },
+    "firstVnetSubnetPrefix": {
+      "value": "10.6.0.0/24"
+    },
+    "secondVnetSubnetName": {
+      "value": "eus2-mosaic-temp20-sqlsvr-snet01"
+    },
+    "secondVnetSubnetPrefix": {
+      "value": "10.6.1.0/24"
+    },
+    "thirdVnetSubnetName": {
+      "value": "eus2-mosaic-temp20-adls-snet01"
+    },
+    "thirdVnetSubnetPrefix": {
+      "value": "10.6.2.0/24"
+    },
+    "newOrExisting": {
+      "value": "new"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: app2-app
+  labels:
+    env: app2-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      env: app2-backend
+  template:
+    metadata:
+      labels:
+        env: app2-backend
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+          name: http
+
+---
+                                                                                        
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-app2-backend
+spec:
+  selector:
+    env: app2-backend
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 80

@@ -1,0 +1,9 @@
+front_podname: app22
+front_podimage: nginx
+front_svc_name: svc-app22
+front_env: app22-frontend
+
+back_podname: web22
+back_podimage: httpd
+back_svc_name: svc-web22
+back_env: app22-backend

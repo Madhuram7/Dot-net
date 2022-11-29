@@ -1,0 +1,15 @@
+
+#download folder java-app
+
+# Build Docker Image
+* $docker build -t java-app .
+
+# check build Image
+docker images
+
+#run built images
+docker run -p 8001:80 -d java-app
+
+#test application 
+http://localhost:8001
+

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storageAccountName": {
+      "value":"mosanptvdl"
+    },
+    "storageSku": {
+      "value":"Standard_LRS"
+    },
+    "location": {
+      "value":"eastus2"
+    },
+    "vnetName": {
+      "value": "mosaic-tv-vNet"
+    },
+    "vnetAddressPrefix": {
+      "value": "10.49.255.0/24"
+    },
+    "subnet1Prefix": {
+      "value": "10.49.255.0/26"
+    },
+    "subnet1Name": {
+      "value": "mosiac-tv-adls-integration-subnet"
+    },
+    "privateEndpointName": {
+      "value": "mosaic-np-tv-adls-private-endpoint"
+    }
+     // "newOrExisting": {
+   //   "value": "new"
+   // }
+  }
+}

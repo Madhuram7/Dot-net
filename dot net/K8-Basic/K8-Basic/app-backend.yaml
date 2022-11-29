@@ -1,0 +1,37 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Values.back_podname }}
+  labels:
+    env: {{ .Values.back_env }}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      env: {{ .Values.back_env }}
+  template:
+    metadata:
+      labels:
+        env: {{ .Values.back_env }}
+    spec:
+      containers:
+      - image: {{ .Values.back_image }}
+        name: {{ .Values.back_podname }}
+        ports:
+        - containerPort: 80
+          name: http
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.back_svc }}
+spec:
+  selector:
+    env: {{ .Values.back_env }}
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 80
+
+---
